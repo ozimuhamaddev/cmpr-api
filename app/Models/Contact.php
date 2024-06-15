@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BannerHome extends Model
+class Contact extends Model
 {
-    protected $table = 'banner';
-    protected $primaryKey = 'banner_id';
+    protected $table = 'contact';
+    protected $primaryKey = 'contact_id';
     public $timestamps = false;
 
 
-    public static function getList()
+    public static function Home()
     {
         return Self::select('title', 'sub_title', 'image_ori', 'image', 'created_at', 'updated_at')
             ->where('active', 'Y')

@@ -18,3 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::post('banner-home', [HomeController::class, 'BannerHome']);
+Route::post('news-home', [HomeController::class, 'NewsHome']);
+Route::post('services-home', [HomeController::class, 'ServicesHome']);
+Route::post('projects-home', [HomeController::class, 'ProjectsHome']);
+Route::post('aboutus-home', [HomeController::class, 'AboutUsHome']);
+Route::post('others-home', [HomeController::class, 'OthersHome']);

@@ -11,7 +11,8 @@ use App\Models\Projects;
 use App\Models\Services;
 use App\Models\News;
 use App\Models\Contact;
-use App\Models\Others;
+
+
 
 class HomeController extends Controller
 {
@@ -54,13 +55,6 @@ class HomeController extends Controller
     {
         $msg = "success get data contact";
         $getData = Contact::Home();
-        return HelperService::_success($msg, $getData);
-    }
-
-    public function OthersHome(Request $request)
-    {
-        $msg = "success get data about";
-        $getData = Others::Home();
         return HelperService::_success($msg, $getData);
     }
 }
