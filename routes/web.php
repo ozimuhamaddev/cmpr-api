@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\HomeController;
+use App\Http\Controllers\API\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,5 @@ Route::post('services-home', [HomeController::class, 'ServicesHome']);
 Route::post('projects-home', [HomeController::class, 'ProjectsHome']);
 Route::post('aboutus-home', [HomeController::class, 'AboutUsHome']);
 Route::post('others-home', [HomeController::class, 'OthersHome']);
+Route::post('projects-category', [HomeController::class, 'ProjectsCategory']);
+Route::post('news-detail', [NewsController::class, 'Detail']);

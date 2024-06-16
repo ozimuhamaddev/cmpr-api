@@ -13,7 +13,8 @@ class Services extends Model
 
     public static function Home()
     {
-        return Self::select('title', 'content', 'image_ori', 'image', 'created_at', 'created_by', 'updated_at', 'updated_by')
+        return Self::select('title', 'short_description', 'description', 'image_ori', 'image', 'icon_image', 'icon_image_ori', 'created_at', 'created_by', 'updated_at', 'updated_by')
+            ->LeftJoin('icon', 'services.icon_id', 'icon.icon_id')
             ->where('active', 'Y')
             ->orderBy('sort', 'DESC')
             ->orderBy('created_at', 'DESC')

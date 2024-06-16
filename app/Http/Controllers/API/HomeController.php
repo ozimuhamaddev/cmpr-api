@@ -33,21 +33,73 @@ class HomeController extends Controller
     {
         $msg = "success get data projects";
         $getData = Projects::Home();
-        return HelperService::_success($msg, $getData);
+        $getDataArray = [];
+        foreach ($getData as $values) {
+            $getDataArray[] = [
+                "id" => HelperService::encrypt($values['project_id']),
+                "title" => $values['title'],
+                "description" => $values['description'],
+                "short_description" => $values['short_description'],
+                "image_ori" => $values['image_ori'],
+                "image" => $values['image'],
+                "icon_image" => $values['icon_image'],
+                "icon_image_ori" => $values['icon_image_ori'],
+                "proj_category_name" => $values['proj_category_name'],
+                "created_at" => $values['created_at'],
+                "created_by" => $values['created_by'],
+                "updated_at" => $values['updated_at'],
+                "updated_by" => $values['updated_by']
+            ];
+        }
+        return HelperService::_success($msg, $getDataArray);
     }
 
     public function ServicesHome(Request $request)
     {
         $msg = "success get data services";
         $getData = Services::Home();
-        return HelperService::_success($msg, $getData);
+        $getDataArray = [];
+        foreach ($getData as $values) {
+            $getDataArray[] = [
+                "id" => HelperService::encrypt($values['sevices_id']),
+                "title" => $values['title'],
+                "description" => $values['description'],
+                "short_description" => $values['short_description'],
+                "image_ori" => $values['image_ori'],
+                "image" => $values['image'],
+                "icon_image" => $values['icon_image'],
+                "icon_image_ori" => $values['icon_image_ori'],
+                "created_at" => $values['created_at'],
+                "created_by" => $values['created_by'],
+                "updated_at" => $values['updated_at'],
+                "updated_by" => $values['updated_by']
+            ];
+        }
+        return HelperService::_success($msg, $getDataArray);
     }
 
     public function NewsHome(Request $request)
     {
         $msg = "success get data news";
         $getData = News::Home();
-        return HelperService::_success($msg, $getData);
+        $getDataArray = [];
+        foreach ($getData as $values) {
+            $getDataArray[] = [
+                "id" => HelperService::encrypt($values['news_id']),
+                "title" => $values['title'],
+                "description" => $values['description'],
+                "short_description" => $values['short_description'],
+                "image_ori" => $values['image_ori'],
+                "image" => $values['image'],
+                "tag" => $values['tag'],
+                "category_name" => $values['category_name'],
+                "created_at" => $values['created_at'],
+                "created_by" => $values['created_by'],
+                "updated_at" => $values['updated_at'],
+                "updated_by" => $values['updated_by']
+            ];
+        }
+        return HelperService::_success($msg, $getDataArray);
     }
 
     public function ContactHome(Request $request)
@@ -61,6 +113,14 @@ class HomeController extends Controller
     {
         $msg = "success get data about";
         $getData = Others::Home();
+        return HelperService::_success($msg, $getData);
+    }
+
+
+    public function ProjectsCategory(Request $request)
+    {
+        $msg = "success get data project category";
+        $getData = Projects::ProjectsCategory();
         return HelperService::_success($msg, $getData);
     }
 }

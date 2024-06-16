@@ -13,7 +13,7 @@ class Contact extends Model
 
     public static function Home()
     {
-        return Self::select('title', 'sub_title', 'image_ori', 'image', 'created_at', 'updated_at')
+        return Self::select('title', 'sub_title', 'image_ori', 'image', 'icon_id', 'created_at', 'updated_at')
             ->where('active', 'Y')
             ->orderBy('sort', 'DESC')
             ->orderBy('created_at', 'DESC')
