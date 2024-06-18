@@ -5,56 +5,21 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\HelperService;
-use App\Models\Banner;
-use App\Models\AboutUs;
-use App\Models\Projects;
 use App\Models\Services;
-use App\Models\News;
-use App\Models\Contact;
+use App\Models\Others;
 
 
 
-class HomeController extends Controller
+class ServicesController extends Controller
 {
-    public function BannerHome(Request $request)
+    public function index(Request $request)
     {
+        $services_id = HelperService::decrypt($request->id);
         $msg = "success get data banner";
-        $getData = Banner::Home();
-        return HelperService::_success($msg, $getData);
-    }
-
-    public function AboutUsHome(Request $request)
-    {
-        $msg = "success get data about";
-        $getData = AboutUs::Home();
-        return HelperService::_success($msg, $getData);
-    }
-
-    public function ProjectsHome(Request $request)
-    {
-        $msg = "success get data projects";
-        $getData = Projects::Home();
-        return HelperService::_success($msg, $getData);
-    }
-
-    public function ServicesHome(Request $request)
-    {
-        $msg = "success get data services";
-        $getData = Services::Home();
-        return HelperService::_success($msg, $getData);
-    }
-
-    public function NewsHome(Request $request)
-    {
-        $msg = "success get data news";
-        $getData = News::Home();
-        return HelperService::_success($msg, $getData);
-    }
-
-    public function ContactHome(Request $request)
-    {
-        $msg = "success get data contact";
-        $getData = Contact::Home();
-        return HelperService::_success($msg, $getData);
+        $data = [];
+        $data['getDetail'] = Services::Detail($services_id);
+        $data['getOther'] = Services::Other($services_id);
+        $data['getTestimoni'] = Others::Testimoni();
+        return HelperService::_success($msg, $data);
     }
 }

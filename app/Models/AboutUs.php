@@ -10,12 +10,11 @@ class AboutUs extends Model
     protected $primaryKey = 'about_us_id';
     public $timestamps = false;
 
-
-    public static function Home()
+    public static function Detail()
     {
         return Self::select('title', 'short_description', 'description', 'image_ori', 'image', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
-            ->get();
+            ->first();
     }
 }

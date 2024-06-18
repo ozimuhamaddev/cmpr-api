@@ -51,14 +51,22 @@ class News extends Model
             ->orderBy('sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
+            ->limit(5)
+            ->get();
+    }
+
+    public static function Tags()
+    {
+        return DB::table('tag')
+            ->select('tag')
             ->limit(6)
             ->get();
     }
 
-    public static function Tag()
+    public static function Category()
     {
-        return DB::table('tag')
-            ->select('tag')
+        return DB::table('category')
+            ->select('category_name')
             ->limit(6)
             ->get();
     }

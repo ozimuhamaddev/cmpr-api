@@ -11,13 +11,9 @@ class Contact extends Model
     public $timestamps = false;
 
 
-    public static function Home()
+    public static function Detail()
     {
-        return Self::select('title', 'sub_title', 'image_ori', 'image', 'icon_id', 'created_at', 'updated_at')
-            ->where('active', 'Y')
-            ->orderBy('sort', 'DESC')
-            ->orderBy('created_at', 'DESC')
-            ->orderBy('updated_at', 'ASC')
-            ->get();
+        return Self::select('title','sub_title', 'address', 'email', 'phone', 'lat', 'long')
+            ->first();
     }
 }
