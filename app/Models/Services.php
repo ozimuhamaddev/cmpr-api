@@ -52,4 +52,15 @@ class Services extends Model
             ->orderBy('updated_at', 'ASC')
             ->get();
     }
+
+    public static function ServicesAll()
+    {
+        return Self::select('title', 'short_description', 'description', 'image_ori', 'image', 'icon_image', 'icon_image_ori', 'created_at', 'created_by', 'updated_at', 'updated_by')
+            ->LeftJoin('icon', 'services.icon_id', 'icon.icon_id')
+            ->where('active', 'Y')
+            ->orderBy('sort', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'ASC')
+            ->get();
+    }
 }

@@ -66,8 +66,32 @@ class News extends Model
     public static function Category()
     {
         return DB::table('category')
-            ->select('category_name')
+            ->select('category_name','category_id')
             ->limit(6)
             ->get();
+    }
+
+
+
+    public static function CategoryDetail($id)
+    {
+        return Self::select('news_id','title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
+            ->join('category', 'news.category_id', 'category.category_id')
+            ->where('active', 'Y')
+            ->where('news.category_id', $id)
+            ->orderBy('sort', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'ASC');
+    }
+
+    public static function TagsDetail($id)
+    {
+        return Self::select('news_id','title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
+            ->join('category', 'news.category_id', 'category.category_id')
+            ->where('active', 'Y')
+            ->where('news.tag', 'LIKE', '%' . $id . '%')
+            ->orderBy('sort', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'ASC');
     }
 }

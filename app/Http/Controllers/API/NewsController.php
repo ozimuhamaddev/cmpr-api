@@ -63,8 +63,16 @@ class NewsController extends Controller
 
         $data['getOther'] = $getDataArray;
         $data['getTag'] = News::Tags();
-        $data['getCategory'] = News::Category();
 
+        $dataCategory = News::Category();
+        $getDataArray = [];
+        foreach ($dataCategory as $values) {
+            $getDataArray[] = [
+                "id" => HelperService::encrypt($values->category_id),
+                "category_name" => $values->category_name,
+            ];
+        }
+        $data['getCategory'] = $getDataArray;
         return HelperService::_success($msg, $data);
     }
 
@@ -79,7 +87,78 @@ class NewsController extends Controller
     public function Category(Request $request)
     {
         $data = News::Category();
+        $getDataArray = [];
+        foreach ($data as $values) {
+            $getDataArray[] = [
+                "id" => HelperService::encrypt($values->category_id),
+                "category_name" => $values->category_name,
+            ];
+        }
+
         $msg = "success get data news";
-        return HelperService::_success($msg, $data);
+        return HelperService::_success($msg, $getDataArray);
+    }
+
+
+    public function tagsDetail(Request $request)
+    {
+        $id = $request->id;
+
+        $perPage = $request->input('length', $request->input('per_page', 10)); // Default to 10 items per page if not provided
+        $page = $request->input('start') !== null
+            ? ($request->input('start') / $perPage) + 1
+            : $request->input('page', 1); // Default to page 1 if not provided
+
+        // Apply the filter before paginating
+        $query = News::TagsDetail($id);
+        $getData = $query->paginate($perPage, ['*'], 'page', $page);
+
+        // Encrypt the 'news_id' for each item
+        $data = $getData->items();
+        $encryptedData = array_map(function ($item) {
+            return array_merge($item->toArray(), [
+                'id' => HelperService::encrypt($item->news_id)
+            ]);
+        }, $data);
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $getData->total(),
+            'recordsFiltered' => $getData->total(),
+            'data' => $encryptedData,
+            'current_page' => $getData->currentPage(), // Halaman saat ini
+            'last_page' => $getData->lastPage() // Halaman terakhir
+        ]);
+    }
+
+    public function categoryDetail(Request $request)
+    {
+        $id = HelperService::decrypt($request->id);
+
+        $perPage = $request->input('length', $request->input('per_page', 10)); // Default to 10 items per page if not provided
+        $page = $request->input('start') !== null
+            ? ($request->input('start') / $perPage) + 1
+            : $request->input('page', 1); // Default to page 1 if not provided
+
+        // Apply the filter before paginating
+        $query = News::CategoryDetail($id);
+        $getData = $query->paginate($perPage, ['*'], 'page', $page);
+
+        // Encrypt the 'news_id' for each item
+        $data = $getData->items();
+        $encryptedData = array_map(function ($item) {
+            return array_merge($item->toArray(), [
+                'id' => HelperService::encrypt($item->news_id)
+            ]);
+        }, $data);
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $getData->total(),
+            'recordsFiltered' => $getData->total(),
+            'data' => $encryptedData,
+            'current_page' => $getData->currentPage(), // Halaman saat ini
+            'last_page' => $getData->lastPage() // Halaman terakhir
+        ]);
     }
 }

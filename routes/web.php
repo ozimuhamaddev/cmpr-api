@@ -6,6 +6,7 @@ use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\AboutUsController;
 use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\ServicesController;
+use App\Http\Controllers\API\ProjectsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,9 @@ Route::post('aboutus', [AboutUsController::class, 'index']);
 Route::post('contact', [ContactController::class, 'index']);
 Route::post('services', [ServicesController::class, 'index']);
 Route::post('news', [NewsController::class, 'index']);
-
+Route::post('services-detail', [ServicesController::class, 'Detail']);
+Route::post('projects', [ProjectsController::class, 'index']);
 Route::post('category-news', [NewsController::class, 'category']);
 Route::post('tags-news', [NewsController::class, 'tags']);
+Route::post('news-tags', [NewsController::class, 'tagsDetail']);
+Route::post('news-category', [NewsController::class, 'categoryDetail']);
