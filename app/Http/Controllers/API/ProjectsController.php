@@ -38,6 +38,6 @@ class ProjectsController extends Controller
                 "updated_by" => $values['updated_by']
             ];
         }
-        return HelperService::_success($msg, $getDataArray);
+        return HelperService::success($msg, $getDataArray);
     }
 }

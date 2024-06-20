@@ -13,6 +13,6 @@ class AboutUsController extends Controller
     {
         $msg = "success get data banner";
         $getData = AboutUs::Detail();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 }

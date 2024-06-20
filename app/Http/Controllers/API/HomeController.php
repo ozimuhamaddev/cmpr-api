@@ -19,14 +19,14 @@ class HomeController extends Controller
     {
         $msg = "success get data banner";
         $getData = Banner::Home();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 
     public function AboutUsHome(Request $request)
     {
         $msg = "success get data about";
         $getData = AboutUs::Home();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 
     public function ProjectsHome(Request $request)
@@ -51,7 +51,7 @@ class HomeController extends Controller
                 "updated_by" => $values['updated_by']
             ];
         }
-        return HelperService::_success($msg, $getDataArray);
+        return HelperService::success($msg, $getDataArray);
     }
 
     public function ServicesHome(Request $request)
@@ -75,7 +75,7 @@ class HomeController extends Controller
                 "updated_by" => $values['updated_by']
             ];
         }
-        return HelperService::_success($msg, $getDataArray);
+        return HelperService::success($msg, $getDataArray);
     }
 
     public function NewsHome(Request $request)
@@ -99,21 +99,21 @@ class HomeController extends Controller
                 "updated_by" => $values['updated_by']
             ];
         }
-        return HelperService::_success($msg, $getDataArray);
+        return HelperService::success($msg, $getDataArray);
     }
 
     public function ContactHome(Request $request)
     {
         $msg = "success get data contact";
         $getData = Contact::Home();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 
     public function OthersHome(Request $request)
     {
         $msg = "success get data about";
         $getData = Others::Home();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 
 
@@ -121,6 +121,6 @@ class HomeController extends Controller
     {
         $msg = "success get data project category";
         $getData = Projects::ProjectsCategory();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 }

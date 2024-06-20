@@ -15,6 +15,6 @@ class ContactController extends Controller
     {
         $msg = "success get data banner";
         $getData = Contact::Detail();
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 }

@@ -73,7 +73,7 @@ class NewsController extends Controller
             ];
         }
         $data['getCategory'] = $getDataArray;
-        return HelperService::_success($msg, $data);
+        return HelperService::success($msg, $data);
     }
 
 
@@ -81,7 +81,7 @@ class NewsController extends Controller
     {
         $data = News::Tags();
         $msg = "success get data news";
-        return HelperService::_success($msg, $data);
+        return HelperService::success($msg, $data);
     }
 
     public function Category(Request $request)
@@ -96,7 +96,7 @@ class NewsController extends Controller
         }
 
         $msg = "success get data news";
-        return HelperService::_success($msg, $getDataArray);
+        return HelperService::success($msg, $getDataArray);
     }
 
 

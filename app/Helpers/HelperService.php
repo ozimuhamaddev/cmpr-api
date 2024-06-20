@@ -4,30 +4,26 @@ namespace App\Helpers;
 
 class HelperService
 {
-    public static function _success($msg, $data)
+    public function success($msg, $data)
     {
-        $result = array(
+        return [
             'response_code' => 200,
             'message' => $msg,
-            'data' => $data,
-
-        );
-        return $result;
+            'data' => $data
+        ];
     }
 
-    public static function _badRequest($msg, $data)
+    public function badRequest($msg, $data)
     {
-        $result = array(
+        return [
             'response_code' => 400,
             'message' => $msg,
             'data' => $data,
             'error' => 1
-        );
-
-        return $result;
+        ];
     }
 
-    function encrypt($data)
+    public function encrypt($data)
     {
         $method = 'AES-256-CBC';
         $key = substr(hash('sha256', env('MYSECRET'), true), 0, 32); // Generate a 256-bit key from the provided key
@@ -39,7 +35,7 @@ class HelperService
     }
 
 
-    function decrypt($data)
+    public function decrypt($data)
     {
         $method = 'AES-256-CBC';
         $key = substr(hash('sha256', env('MYSECRET'), true), 0, 32); // Generate a 256-bit key from the provided key
@@ -47,7 +43,6 @@ class HelperService
         $data = base64_decode($data); // Decode the base64 encoded data
         $iv = substr($data, 0, 16); // Extract the IV from the data
         $encrypted = substr($data, 16); // Extract the encrypted data
-        $decrypted = openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA, $iv);
-        return $decrypted;
+        return openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA, $iv);
     }
 }

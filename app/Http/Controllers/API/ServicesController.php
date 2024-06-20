@@ -33,7 +33,7 @@ class ServicesController extends Controller
                 "updated_by" => $values['updated_by']
             ];
         }
-        return HelperService::_success($msg, $getDataArray);
+        return HelperService::success($msg, $getDataArray);
     }
 
 
@@ -42,6 +42,6 @@ class ServicesController extends Controller
         $services_id = HelperService::decrypt($request->id);
         $msg = "success get data banner";
         $getData = Services::Detail($services_id);
-        return HelperService::_success($msg, $getData);
+        return HelperService::success($msg, $getData);
     }
 }
