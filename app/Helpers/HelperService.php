@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class HelperService
 {
-    public function success($msg, $data)
+    public static function success($msg, $data)
     {
         return [
             'response_code' => 200,
@@ -13,7 +13,7 @@ class HelperService
         ];
     }
 
-    public function badRequest($msg, $data)
+    public static function badRequest($msg, $data)
     {
         return [
             'response_code' => 400,
@@ -23,7 +23,7 @@ class HelperService
         ];
     }
 
-    public function encrypt($data)
+    public static function encrypt($data)
     {
         $method = 'AES-256-CBC';
         $key = substr(hash('sha256', env('MYSECRET'), true), 0, 32); // Generate a 256-bit key from the provided key
@@ -35,7 +35,7 @@ class HelperService
     }
 
 
-    public function decrypt($data)
+    public static function decrypt($data)
     {
         $method = 'AES-256-CBC';
         $key = substr(hash('sha256', env('MYSECRET'), true), 0, 32); // Generate a 256-bit key from the provided key
