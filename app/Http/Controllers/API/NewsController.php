@@ -112,20 +112,33 @@ class NewsController extends Controller
         // Apply the filter before paginating
         $query = News::TagsDetail($id);
         $getData = $query->paginate($perPage, ['*'], 'page', $page);
+        $data = $getData->map(function ($item) {
+            return [
+                'id' => HelperService::encrypt($item->news_id),
+                'title' => $item->title,
+                'short_description' => $item->short_description,
+                'description' => $item->description,
+                'image_ori' => $item->image_ori,
+                'image' => $item->image,
+                'icon_id' => $item->icon_id,
+                'tag' => $item->tag,
+                'category_name' => $item->category_name,
+                'created_at' => $item->created_at,
+                'created_by' => $item->created_by,
+                'updated_at' => $item->updated_at,
+                'updated_by' => $item->updated_by
+            ];
+        });
 
-        // Encrypt the 'news_id' for each item
-        $data = $getData->items();
-        $encryptedData = array_map(function ($item) {
-            return array_merge($item->toArray(), [
-                'id' => HelperService::encrypt($item->news_id)
-            ]);
-        }, $data);
+
+
+
 
         return response()->json([
             'draw' => intval($request->input('draw')),
             'recordsTotal' => $getData->total(),
             'recordsFiltered' => $getData->total(),
-            'data' => $encryptedData,
+            'data' => $data,
             'current_page' => $getData->currentPage(), // Halaman saat ini
             'last_page' => $getData->lastPage() // Halaman terakhir
         ]);

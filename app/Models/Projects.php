@@ -18,7 +18,7 @@ class Projects extends Model
             ->join('projects_category', 'projects.proj_category_id', 'projects_category.proj_category_id')
             ->LeftJoin('icon', 'projects.icon_id', 'icon.icon_id')
             ->where('projects.active', 'Y')
-            ->orderBy('sort', 'DESC')
+            ->orderBy('projects.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
             ->get();
@@ -29,7 +29,7 @@ class Projects extends Model
             ->join('projects_category', 'projects.proj_category_id', 'projects_category.proj_category_id')
             ->LeftJoin('icon', 'projects.icon_id', 'icon.icon_id')
             ->where('projects.active', 'Y')
-            ->orderBy('sort', 'DESC')
+            ->orderBy('projects.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
             ->limit(30)

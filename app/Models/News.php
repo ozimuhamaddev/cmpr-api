@@ -17,7 +17,7 @@ class News extends Model
         return Self::select('news_id', 'title', 'description', 'image_ori', 'image', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
             ->where('active', 'Y')
-            ->orderBy('sort', 'DESC')
+            ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
             ->limit(6)
@@ -29,7 +29,7 @@ class News extends Model
         return Self::select('title', 'description', 'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
             ->where('active', 'Y')
-            ->orderBy('sort', 'DESC')
+            ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC');
     }
@@ -48,7 +48,7 @@ class News extends Model
             ->join('category', 'news.category_id', 'category.category_id')
             ->where('active', 'Y')
             ->where('news_id', '<>', $news_id)
-            ->orderBy('sort', 'DESC')
+            ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
             ->limit(5)
@@ -79,7 +79,7 @@ class News extends Model
             ->join('category', 'news.category_id', 'category.category_id')
             ->where('active', 'Y')
             ->where('news.category_id', $id)
-            ->orderBy('sort', 'DESC')
+            ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC');
     }
@@ -90,7 +90,7 @@ class News extends Model
             ->join('category', 'news.category_id', 'category.category_id')
             ->where('active', 'Y')
             ->where('news.tag', 'LIKE', '%' . $id . '%')
-            ->orderBy('sort', 'DESC')
+            ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC');
     }

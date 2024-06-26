@@ -15,7 +15,7 @@ class Banner extends Model
     {
         return Self::select('title', 'sub_title', 'image_ori', 'image', 'created_at', 'updated_at')
             ->where('active', 'Y')
-            ->orderBy('sort', 'DESC')
+            ->orderBy('banner.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
             ->get();

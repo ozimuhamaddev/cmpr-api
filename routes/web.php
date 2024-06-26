@@ -7,6 +7,10 @@ use App\Http\Controllers\API\AboutUsController;
 use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\ServicesController;
 use App\Http\Controllers\API\ProjectsController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\API\Admin\AdminHomeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +44,23 @@ Route::post('category-news', [NewsController::class, 'category']);
 Route::post('tags-news', [NewsController::class, 'tags']);
 Route::post('news-tags', [NewsController::class, 'tagsDetail']);
 Route::post('news-category', [NewsController::class, 'categoryDetail']);
+
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+Route::post('check-token', [AuthController::class, 'checkToken']);
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// Protect these routes with JWT middleware
+Route::middleware(['check.jwt'])->group(function () use ($router) {
+
+    Route::get('me', [AuthController::class, 'me']);
+    $router->group(['prefix' => 'admin'], function () use ($router) {
+        
+        $router->post('home', [AdminHomeController::class, 'index']);
+        $router->post('do-status-menu', [AdminHomeController::class, 'doStatusMenu']);
+
+    });
+    // Add other protected routes here
+});
