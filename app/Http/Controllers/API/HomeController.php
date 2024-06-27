@@ -12,6 +12,8 @@ use App\Models\Services;
 use App\Models\News;
 use App\Models\Contact;
 use App\Models\Others;
+use App\Models\Menu;
+
 
 class HomeController extends Controller
 {
@@ -25,7 +27,7 @@ class HomeController extends Controller
     public function AboutUsHome(Request $request)
     {
         $msg = "success get data about";
-        $getData = AboutUs::Home();
+        $getData = AboutUs::Detail();
         return HelperService::success($msg, $getData);
     }
 
@@ -121,6 +123,13 @@ class HomeController extends Controller
     {
         $msg = "success get data project category";
         $getData = Projects::ProjectsCategory();
+        return HelperService::success($msg, $getData);
+    }
+
+    public function Menu(Request $request)
+    {
+        $msg = "success get data menu";
+        $getData = Menu::GetMenu()->get();
         return HelperService::success($msg, $getData);
     }
 }

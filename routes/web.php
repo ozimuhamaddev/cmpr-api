@@ -26,6 +26,7 @@ use App\Http\Controllers\API\Admin\AdminHomeController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('menu', [HomeController::class, 'Menu']);
 Route::post('banner-home', [HomeController::class, 'BannerHome']);
 Route::post('news-home', [HomeController::class, 'NewsHome']);
 Route::post('services-home', [HomeController::class, 'ServicesHome']);
@@ -57,10 +58,9 @@ Route::middleware(['check.jwt'])->group(function () use ($router) {
 
     Route::get('me', [AuthController::class, 'me']);
     $router->group(['prefix' => 'admin'], function () use ($router) {
-        
+
         $router->post('home', [AdminHomeController::class, 'index']);
         $router->post('do-status-menu', [AdminHomeController::class, 'doStatusMenu']);
-
     });
     // Add other protected routes here
 });
