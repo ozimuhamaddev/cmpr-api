@@ -19,4 +19,10 @@ class Menu extends Model
     {
         return Self::where('menu_id', $menu_id)->update($value);
     }
+
+
+    public static function Detail($menu_id)
+    {
+        return Self::select('menu_id', 'menu_name', 'link', 'active')->where('menu_id', $menu_id)->orderBy('sort', 'DESC')->first();
+    }
 }

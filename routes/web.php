@@ -9,9 +9,14 @@ use App\Http\Controllers\API\ServicesController;
 use App\Http\Controllers\API\ProjectsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\API\Admin\AdminHomeController;
+use App\Http\Controllers\API\Admin\AdminNewsController;
+use App\Http\Controllers\API\Admin\StaticController;
+use App\Http\Controllers\API\Admin\AdminAboutUsController;
+use App\Http\Controllers\API\Admin\AdminContactController;
 
-
-
+use App\Http\Controllers\API\Admin\TestimonialController;
+use App\Http\Controllers\API\Admin\ClientController;
+use App\Http\Controllers\API\Admin\WedoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,16 +56,24 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('refresh', [AuthController::class, 'refresh']);
 Route::post('check-token', [AuthController::class, 'checkToken']);
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 // Protect these routes with JWT middleware
 Route::middleware(['check.jwt'])->group(function () use ($router) {
-
     Route::get('me', [AuthController::class, 'me']);
     $router->group(['prefix' => 'admin'], function () use ($router) {
-
         $router->post('home', [AdminHomeController::class, 'index']);
         $router->post('do-status-menu', [AdminHomeController::class, 'doStatusMenu']);
+        $router->post('news', [AdminNewsController::class, 'index']);
+        $router->post('static', [StaticController::class, 'index']);
+        $router->post('do-add-static', [StaticController::class, 'doAddStatic']);
+
+
+        $router->post('testimonial', [TestimonialController::class, 'index']);
+        $router->post('client', [ClientController::class, 'index']);
+        $router->post('wedo', [WedoController::class, 'index']);
+
+
+        $router->post('about/do-update', [AdminAboutUsController::class, 'doUpdate']);
+        $router->post('contact/do-update', [AdminContactController::class, 'doUpdate']);
     });
-    // Add other protected routes here
 });

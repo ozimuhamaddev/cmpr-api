@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Menu;
+use App\Models\News;
 use App\Helpers\HelperService;
 
 
-class AdminHomeController extends Controller
+class AdminNewsController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,17 +18,23 @@ class AdminHomeController extends Controller
             : $request->input('page', 1); // Default to page 1 if not provided
 
         // Apply the filter before paginating
-        $query = Menu::GetMenu();
+        $query = News::ListAll();
         $getData = $query->paginate($perPage, ['*'], 'page', $page);
-
-        // Modify the items to only include specific columns and encrypt 'menu_id'
         $data = $getData->map(function ($item) {
             return [
-                'id' => HelperService::encrypt($item->menu_id),
-                'menu_name' => $item->menu_name, // Include only the 'name' column
-                'link' => $item->link, // Include only the 'name' column
-                'active' => $item->active, // Include only the 'description' column
-                // Add other columns you want to include here
+                'id' => HelperService::encrypt($item->news_id),
+                'title' => $item->title,
+                'short_description' => $item->short_description,
+                'description' => $item->description,
+                'image_ori' => $item->image_ori,
+                'image' => $item->image,
+                'icon_id' => $item->icon_id,
+                'tag' => $item->tag,
+                'category_name' => $item->category_name,
+                'created_at' => $item->created_at,
+                'created_by' => $item->created_by,
+                'updated_at' => $item->updated_at,
+                'updated_by' => $item->updated_by
             ];
         });
 
@@ -40,19 +46,5 @@ class AdminHomeController extends Controller
             'current_page' => $getData->currentPage(), // Halaman saat ini
             'last_page' => $getData->lastPage() // Halaman terakhir
         ]);
-    }
-
-
-    public function doStatusMenu(Request $request)
-    {
-        $menu_id = HelperService::decrypt($request->id);
-        $value = [
-            'active' => $request->input('value')
-        ];
-
-        Menu::UpdateStatus($menu_id, $value);
-
-        $msg = "success update status";
-        return HelperService::success($msg, []);
     }
 }

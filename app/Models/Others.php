@@ -34,4 +34,25 @@ class Others extends Model
             ->orderBy('updated_at', 'ASC')
             ->get();
     }
+
+
+    public static function DetailSingle($menu_id)
+    {
+        return Self::select('title', 'others.menu_id', 'short_description', 'description', 'menu_name', 'image_ori', 'image', 'icon_image', 'icon_image_ori', 'created_at', 'created_by', 'updated_at', 'updated_by')
+            ->join('menu', 'others.menu_id', 'menu.menu_id')
+            ->LeftJoin('icon', 'others.icon_id', 'icon.icon_id')
+            ->where('others.menu_id', $menu_id)
+            ->orderBy('others.sort', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'ASC')
+            ->first();
+    }
+
+
+
+    public static function UpdateOthers($param, $menu_id)
+    {
+        return Self::where('menu_id', $menu_id)
+            ->update($param);
+    }
 }

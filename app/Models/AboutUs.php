@@ -17,4 +17,10 @@ class AboutUs extends Model
             ->orderBy('updated_at', 'ASC')
             ->first();
     }
+
+    public static function UpdateAbout($param)
+    {
+        return Self::where('about_us_id', 1)
+            ->update($param);
+    }
 }

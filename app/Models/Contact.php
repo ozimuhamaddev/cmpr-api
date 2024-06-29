@@ -10,10 +10,15 @@ class Contact extends Model
     protected $primaryKey = 'contact_id';
     public $timestamps = false;
 
-
     public static function Detail()
     {
-        return Self::select('title','sub_title', 'address', 'email', 'phone', 'lat', 'long')
+        return Self::select('title', 'sub_title', 'address', 'email', 'phone', 'lat', 'long')
             ->first();
+    }
+
+    public static function UpdateContact($param)
+    {
+        return Self::where('contact_id', 1)
+            ->update($param);
     }
 }
