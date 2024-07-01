@@ -121,9 +121,17 @@ class HomeController extends Controller
 
     public function ProjectsCategory(Request $request)
     {
+        $data = Projects::ProjectsCategory();
+        $getDataArray = [];
+        foreach ($data as $values) {
+            $getDataArray[] = [
+                "id" => HelperService::encrypt($values->proj_category_id),
+                "proj_category_name" => $values->proj_category_name,
+            ];
+        }
+
         $msg = "success get data project category";
-        $getData = Projects::ProjectsCategory();
-        return HelperService::success($msg, $getData);
+        return HelperService::success($msg, $getDataArray);
     }
 
     public function Menu(Request $request)

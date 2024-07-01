@@ -12,6 +12,19 @@ class News extends Model
     protected $primaryKey = 'news_id';
     public $timestamps = false;
 
+
+    protected $fillable = [
+        'title',
+        'category_id',
+        'tag',
+        'short_description',
+        'description',
+        'image',
+        'image_ori',
+        'updated_at',
+        'created_at'
+    ];
+
     public static function Home()
     {
         return Self::select('news_id', 'title', 'description', 'image_ori', 'image', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
@@ -36,7 +49,7 @@ class News extends Model
 
     public static function Detail($news_id)
     {
-        return Self::select('news_id', 'title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
+        return Self::select('news_id', 'title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'news.category_id', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
             ->where('news_id', $news_id)
             ->first();
@@ -101,9 +114,17 @@ class News extends Model
     {
         return Self::select('news_id', 'title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y')
-            ->orderBy('news.sort', 'DESC')
-            ->orderBy('created_at', 'DESC')
-            ->orderBy('updated_at', 'ASC');
+            ->where('active', 'Y');
+    }
+
+    public static function AddNews($param)
+    {
+        return Self::create($param);
+    }
+
+    public static function UpdateNews($param, $news_id)
+    {
+        return Self::where('news_id', $news_id)
+            ->update($param);
     }
 }

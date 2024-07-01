@@ -19,7 +19,13 @@ class ProjectsController extends Controller
     public function index(Request $request)
     {
         $msg = "success get data projects";
-        $getData = Projects::ProjectHAll();
+        $getData = Projects::ProjectsAll();
+        $getData->orderBy('projects.sort', 'DESC');
+        $getData->orderBy('created_at', 'DESC');
+        $getData->orderBy('updated_at', 'ASC');
+        $getData->get();
+
+        
         $getDataArray = [];
         foreach ($getData as $values) {
             $getDataArray[] = [

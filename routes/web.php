@@ -10,6 +10,7 @@ use App\Http\Controllers\API\ProjectsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\API\Admin\AdminHomeController;
 use App\Http\Controllers\API\Admin\AdminNewsController;
+use App\Http\Controllers\API\Admin\AdminProjectsController;
 use App\Http\Controllers\API\Admin\StaticController;
 use App\Http\Controllers\API\Admin\AdminAboutUsController;
 use App\Http\Controllers\API\Admin\AdminContactController;
@@ -63,17 +64,21 @@ Route::middleware(['check.jwt'])->group(function () use ($router) {
     $router->group(['prefix' => 'admin'], function () use ($router) {
         $router->post('home', [AdminHomeController::class, 'index']);
         $router->post('do-status-menu', [AdminHomeController::class, 'doStatusMenu']);
-        $router->post('news', [AdminNewsController::class, 'index']);
         $router->post('static', [StaticController::class, 'index']);
         $router->post('do-add-static', [StaticController::class, 'doAddStatic']);
-
 
         $router->post('testimonial', [TestimonialController::class, 'index']);
         $router->post('client', [ClientController::class, 'index']);
         $router->post('wedo', [WedoController::class, 'index']);
 
-
         $router->post('about/do-update', [AdminAboutUsController::class, 'doUpdate']);
         $router->post('contact/do-update', [AdminContactController::class, 'doUpdate']);
+
+        $router->post('news/index-admin', [AdminNewsController::class, 'index']);
+        $router->post('news/do-add', [AdminNewsController::class, 'doAdd']);
+
+        $router->post('projects/index-admin', [AdminProjectsController::class, 'index']);
+        $router->post('projects/do-add', [AdminProjectsController::class, 'doAdd']);
+        Route::post('projects-detail', [AdminProjectsController::class, 'Detail']);
     });
 });

@@ -20,6 +20,9 @@ class NewsController extends Controller
 
         // Apply the filter before paginating
         $query = News::ListAll();
+        $query->orderBy('news.sort', 'DESC');
+        $query->orderBy('created_at', 'DESC');
+        $query->orderBy('updated_at', 'ASC');
         $getData = $query->paginate($perPage, ['*'], 'page', $page);
         $data = $getData->map(function ($item) {
             return [
@@ -51,7 +54,6 @@ class NewsController extends Controller
 
     public function Detail(Request $request)
     {
-
         $news_id = HelperService::decrypt($request->id);
         $msg = "success get data news";
         $data = [];
@@ -67,6 +69,7 @@ class NewsController extends Controller
             'icon_id' => $detail->icon_id,
             'tag' => $detail->tag,
             'category_name' => $detail->category_name,
+            'category_id' =>  HelperService::encrypt($detail->category_id),
             'created_at' => $detail->created_at,
             'created_by' => $detail->created_by,
             'updated_at' => $detail->updated_at,
