@@ -23,9 +23,8 @@ class ProjectsController extends Controller
         $getData->orderBy('projects.sort', 'DESC');
         $getData->orderBy('created_at', 'DESC');
         $getData->orderBy('updated_at', 'ASC');
-        $getData->get();
+        $getData = $getData->get();
 
-        
         $getDataArray = [];
         foreach ($getData as $values) {
             $getDataArray[] = [

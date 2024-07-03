@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Services;
 use App\Helpers\HelperService;
 
 
-class AdminNewsController extends Controller
+class AdminServicesController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,18 +18,18 @@ class AdminNewsController extends Controller
             : $request->input('page', 1); // Default to page 1 if not provided
 
         // Apply the filter before paginating
-        $query = News::ListAll();
-        $query->orderBy('news.news_id', 'DESC');
+        $query = Services::ServicesAll();
+        $query->orderBy('services.services_id', 'DESC');
         $getData = $query->paginate($perPage, ['*'], 'page', $page);
         $data = $getData->map(function ($item) {
             return [
-                'id' => HelperService::encrypt($item->news_id),
+                'id' => HelperService::encrypt($item->services_id),
                 'title' => $item->title,
                 'short_description' => $item->short_description,
                 'description' => $item->description,
                 'image_ori' => $item->image_ori,
                 'image' => $item->image,
-                'icon_id' => $item->icon_id,
+                'icon_id' => HelperService::encrypt($item->icon_id),
                 'tag' => $item->tag,
                 'category_name' => $item->category_name,
                 'created_at' => $item->created_at,
@@ -52,11 +52,10 @@ class AdminNewsController extends Controller
     public function doAdd(Request $request)
     {
 
-        $category_id = HelperService::decrypt($request->category_id);
+        $icon_id = HelperService::decrypt($request->icon_id);
         $param = [
             "title" => $request->title,
-            "category_id" => $category_id,
-            "tag" => $request->tag,
+            "icon_id" => $icon_id,
             "short_description" => $request->short_description,
             "description" => $request->description,
             "updated_at" => date("Y-m-d H:i:s"),
@@ -68,14 +67,14 @@ class AdminNewsController extends Controller
         }
 
         if ($request->id != "") {
-            $news_id = HelperService::decrypt($request->id);
-            News::UpdateNews($param, $news_id);
+            $services_id = HelperService::decrypt($request->id);
+            Services::UpdateServices($param, $services_id);
         } else {
             $param["created_at"] = date("Y-m-d H:i:s");
-            News::AddNews($param);
+            Services::AddServices($param);
         }
 
-        $msg = "success update news";
+        $msg = "success update services";
         return HelperService::success($msg, []);
     }
 
@@ -86,10 +85,10 @@ class AdminNewsController extends Controller
             "active" => "N",
             "updated_at" => date("Y-m-d H:i:s")
         ];
-        $news_id = HelperService::decrypt($request->id);
-        News::UpdateNews($param, $news_id);
+        $services_id = HelperService::decrypt($request->id);
+        services::UpdateServices($param, $services_id);
 
-        $msg = "success update news";
+        $msg = "success update services";
         return HelperService::success($msg, []);
     }
 }

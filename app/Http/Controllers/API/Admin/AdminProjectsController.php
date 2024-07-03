@@ -101,4 +101,19 @@ class AdminProjectsController extends Controller
         ];
         return HelperService::success($msg, $data);
     }
+
+
+    public function doDelete(Request $request)
+    {
+
+        $param = [
+            "active" => "N",
+            "updated_at" => date("Y-m-d H:i:s")
+        ];
+        $projects_id = HelperService::decrypt($request->id);
+        Projects::UpdateProjects($param, $projects_id);
+
+        $msg = "success update news";
+        return HelperService::success($msg, []);
+    }
 }

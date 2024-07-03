@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\WeDo;
 use App\Helpers\HelperService;
 
 
-class AdminNewsController extends Controller
+class AdminWeDoController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,20 +18,15 @@ class AdminNewsController extends Controller
             : $request->input('page', 1); // Default to page 1 if not provided
 
         // Apply the filter before paginating
-        $query = News::ListAll();
-        $query->orderBy('news.news_id', 'DESC');
+        $query = WeDo::Home();
+        $query = $query->orderBy('wedo.wedo_id', 'DESC');
         $getData = $query->paginate($perPage, ['*'], 'page', $page);
         $data = $getData->map(function ($item) {
             return [
-                'id' => HelperService::encrypt($item->news_id),
+                'id' => HelperService::encrypt($item->wedo_id),
                 'title' => $item->title,
-                'short_description' => $item->short_description,
-                'description' => $item->description,
-                'image_ori' => $item->image_ori,
-                'image' => $item->image,
-                'icon_id' => $item->icon_id,
-                'tag' => $item->tag,
-                'category_name' => $item->category_name,
+                'icon_id' => HelperService::encrypt($item->icon_id),
+                "icon_image" => $item->icon_image,
                 'created_at' => $item->created_at,
                 'created_by' => $item->created_by,
                 'updated_at' => $item->updated_at,
@@ -49,47 +44,58 @@ class AdminNewsController extends Controller
         ]);
     }
 
+
     public function doAdd(Request $request)
     {
 
-        $category_id = HelperService::decrypt($request->category_id);
+        $icon_id = HelperService::decrypt($request->icon_id);
         $param = [
             "title" => $request->title,
-            "category_id" => $category_id,
-            "tag" => $request->tag,
-            "short_description" => $request->short_description,
-            "description" => $request->description,
+            "icon_id" => $icon_id,
             "updated_at" => date("Y-m-d H:i:s"),
         ];
 
-        if ($request->image != "") {
-            $param["image"] = $request->image;
-            $param["image_ori"] = $request->image_ori;
-        }
-
         if ($request->id != "") {
-            $news_id = HelperService::decrypt($request->id);
-            News::UpdateNews($param, $news_id);
+            $wedo_id = HelperService::decrypt($request->id);
+            WeDo::UpdateWeDo($param, $wedo_id);
         } else {
             $param["created_at"] = date("Y-m-d H:i:s");
-            News::AddNews($param);
+            WeDo::AddWeDo($param);
         }
 
-        $msg = "success update news";
+        $msg = "success update banner";
         return HelperService::success($msg, []);
     }
 
     public function doDelete(Request $request)
     {
-
         $param = [
             "active" => "N",
             "updated_at" => date("Y-m-d H:i:s")
         ];
-        $news_id = HelperService::decrypt($request->id);
-        News::UpdateNews($param, $news_id);
+        $wedo_id = HelperService::decrypt($request->id);
+        WeDo::UpdateWeDo($param, $wedo_id);
 
-        $msg = "success update news";
+        $msg = "success update banner";
         return HelperService::success($msg, []);
+    }
+
+    public function Detail(Request $request)
+    {
+        $wedo_id = HelperService::decrypt($request->id);
+        $msg = "success get data banner";
+        $getData = WeDo::Detail($wedo_id);
+        $getDataArray = [
+            "id" => HelperService::encrypt($getData->wedo_id),
+            "title" => $getData->title,
+            "icon_id" => HelperService::encrypt($getData->icon_id),
+            "icon_image" => $getData->icon_image,
+            "icon_image_ori" => $getData->icon_image_ori,
+            "created_at" => $getData->created_at,
+            "created_by" => $getData->created_by,
+            "updated_at" => $getData->updated_at,
+            "updated_by" => $getData->updated_by,
+        ];
+        return HelperService::success($msg, $getDataArray);
     }
 }

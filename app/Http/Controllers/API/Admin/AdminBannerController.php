@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Banner;
 use App\Helpers\HelperService;
 
 
-class AdminNewsController extends Controller
+class AdminBannerController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,20 +18,16 @@ class AdminNewsController extends Controller
             : $request->input('page', 1); // Default to page 1 if not provided
 
         // Apply the filter before paginating
-        $query = News::ListAll();
-        $query->orderBy('news.news_id', 'DESC');
+        $query = Banner::Home();
+        $query = $query->orderBy('banner.banner_id', 'DESC');
         $getData = $query->paginate($perPage, ['*'], 'page', $page);
         $data = $getData->map(function ($item) {
             return [
-                'id' => HelperService::encrypt($item->news_id),
+                'id' => HelperService::encrypt($item->banner_id),
                 'title' => $item->title,
-                'short_description' => $item->short_description,
-                'description' => $item->description,
+                'sub_title' => $item->sub_title,
                 'image_ori' => $item->image_ori,
                 'image' => $item->image,
-                'icon_id' => $item->icon_id,
-                'tag' => $item->tag,
-                'category_name' => $item->category_name,
                 'created_at' => $item->created_at,
                 'created_by' => $item->created_by,
                 'updated_at' => $item->updated_at,
@@ -49,16 +45,14 @@ class AdminNewsController extends Controller
         ]);
     }
 
+
     public function doAdd(Request $request)
     {
 
-        $category_id = HelperService::decrypt($request->category_id);
+        $icon_id = HelperService::decrypt($request->icon_id);
         $param = [
             "title" => $request->title,
-            "category_id" => $category_id,
-            "tag" => $request->tag,
-            "short_description" => $request->short_description,
-            "description" => $request->description,
+            "sub_title" => $request->sub_title,
             "updated_at" => date("Y-m-d H:i:s"),
         ];
 
@@ -68,28 +62,46 @@ class AdminNewsController extends Controller
         }
 
         if ($request->id != "") {
-            $news_id = HelperService::decrypt($request->id);
-            News::UpdateNews($param, $news_id);
+            $banner_id = HelperService::decrypt($request->id);
+            Banner::UpdateBanner($param, $banner_id);
         } else {
             $param["created_at"] = date("Y-m-d H:i:s");
-            News::AddNews($param);
+            Banner::AddBanner($param);
         }
 
-        $msg = "success update news";
+        $msg = "success update banner";
         return HelperService::success($msg, []);
     }
 
     public function doDelete(Request $request)
     {
-
         $param = [
             "active" => "N",
             "updated_at" => date("Y-m-d H:i:s")
         ];
-        $news_id = HelperService::decrypt($request->id);
-        News::UpdateNews($param, $news_id);
+        $banner_id = HelperService::decrypt($request->id);
+        banner::Updatebanner($param, $banner_id);
 
-        $msg = "success update news";
+        $msg = "success update banner";
         return HelperService::success($msg, []);
+    }
+
+    public function Detail(Request $request)
+    {
+        $banner_id = HelperService::decrypt($request->id);
+        $msg = "success get data banner";
+        $getData = Banner::Detail($banner_id);
+        $getDataArray = [
+            "id" => HelperService::encrypt($getData->banner_id),
+            "title" => $getData->title,
+            "sub_title" => $getData->sub_title,
+            "image_ori" => $getData->image_ori,
+            "image" => $getData->image,
+            "created_at" => $getData->created_at,
+            "created_by" => $getData->created_by,
+            "updated_at" => $getData->updated_at,
+            "updated_by" => $getData->updated_by,
+        ];
+        return HelperService::success($msg, $getDataArray);
     }
 }

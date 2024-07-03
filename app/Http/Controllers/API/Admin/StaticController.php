@@ -33,4 +33,22 @@ class StaticController extends Controller
         $msg = "success get data static";
         return HelperService::success($msg, $data);
     }
+
+    public function doAddStaticImage(Request $request)
+    {
+        $menu_id = HelperService::decrypt($request->id);
+
+        if ($request->image != "") {
+            $param = [
+                "image" => $request->image,
+                "image_ori" => $request->image_ori,
+                "updated_at" => date("Y-m-d H:i:s"),
+            ];
+
+            $data = Others::UpdateOthers($param, $menu_id);
+        }
+
+        $msg = "success get data static";
+        return HelperService::success($msg, $data);
+    }
 }

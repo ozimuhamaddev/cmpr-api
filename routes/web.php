@@ -14,8 +14,12 @@ use App\Http\Controllers\API\Admin\AdminProjectsController;
 use App\Http\Controllers\API\Admin\StaticController;
 use App\Http\Controllers\API\Admin\AdminAboutUsController;
 use App\Http\Controllers\API\Admin\AdminContactController;
-
+use App\Http\Controllers\API\Admin\AdminServicesController;
+use App\Http\Controllers\API\Admin\AdminBannerController;
+use App\Http\Controllers\API\Admin\AdminWeDoController;
+use App\Http\Controllers\API\Admin\AdminNumberClientController;
 use App\Http\Controllers\API\Admin\TestimonialController;
+use App\Http\Controllers\API\Admin\AdminClientsController;
 use App\Http\Controllers\API\Admin\ClientController;
 use App\Http\Controllers\API\Admin\WedoController;
 /*
@@ -51,6 +55,11 @@ Route::post('category-news', [NewsController::class, 'category']);
 Route::post('tags-news', [NewsController::class, 'tags']);
 Route::post('news-tags', [NewsController::class, 'tagsDetail']);
 Route::post('news-category', [NewsController::class, 'categoryDetail']);
+Route::post('icon', [HomeController::class, 'Icon']);
+Route::post('clients-home', [HomeController::class, 'ClientsHome']);
+Route::post('numberclient-home', [HomeController::class, 'NumberClientHome']);
+Route::post('wedo-home', [HomeController::class, 'WeDoHome']);
+Route::post('contact-home', [HomeController::class, 'ContactHome']);
 
 
 Route::post('login', [AuthController::class, 'login']);
@@ -65,7 +74,9 @@ Route::middleware(['check.jwt'])->group(function () use ($router) {
         $router->post('home', [AdminHomeController::class, 'index']);
         $router->post('do-status-menu', [AdminHomeController::class, 'doStatusMenu']);
         $router->post('static', [StaticController::class, 'index']);
+        $router->post('static-image', [StaticController::class, 'index']);
         $router->post('do-add-static', [StaticController::class, 'doAddStatic']);
+        $router->post('do-add-static-image', [StaticController::class, 'doAddStaticImage']);
 
         $router->post('testimonial', [TestimonialController::class, 'index']);
         $router->post('client', [ClientController::class, 'index']);
@@ -76,9 +87,35 @@ Route::middleware(['check.jwt'])->group(function () use ($router) {
 
         $router->post('news/index-admin', [AdminNewsController::class, 'index']);
         $router->post('news/do-add', [AdminNewsController::class, 'doAdd']);
+        $router->post('news/do-delete', [AdminNewsController::class, 'doDelete']);
 
         $router->post('projects/index-admin', [AdminProjectsController::class, 'index']);
         $router->post('projects/do-add', [AdminProjectsController::class, 'doAdd']);
-        Route::post('projects-detail', [AdminProjectsController::class, 'Detail']);
+        $router->post('projects-detail', [AdminProjectsController::class, 'Detail']);
+        $router->post('projects/do-delete', [AdminProjectsController::class, 'doDelete']);
+
+        $router->post('services/index-admin', [AdminServicesController::class, 'index']);
+        $router->post('services/do-add', [AdminServicesController::class, 'doAdd']);
+        $router->post('services/do-delete', [AdminServicesController::class, 'doDelete']);
+
+        $router->post('banner/index-admin', [AdminBannerController::class, 'index']);
+        $router->post('banner/do-add', [AdminBannerController::class, 'doAdd']);
+        $router->post('banner/do-delete', [AdminBannerController::class, 'doDelete']);
+        $router->post('banner/banner-detail', [AdminBannerController::class, 'Detail']);
+
+        $router->post('wedo/index-admin', [AdminWeDoController::class, 'index']);
+        $router->post('wedo/do-add', [AdminWeDoController::class, 'doAdd']);
+        $router->post('wedo/do-delete', [AdminWeDoController::class, 'doDelete']);
+        $router->post('wedo/wedo-detail', [AdminWeDoController::class, 'Detail']);
+
+        $router->post('numberclient/index-admin', [AdminNumberClientController::class, 'index']);
+        $router->post('numberclient/do-add', [AdminNumberClientController::class, 'doAdd']);
+        $router->post('numberclient/do-delete', [AdminNumberClientController::class, 'doDelete']);
+        $router->post('numberclient/numberclient-detail', [AdminNumberClientController::class, 'Detail']);
+
+        $router->post('clients/index-admin', [AdminClientsController::class, 'index']);
+        $router->post('clients/do-add', [AdminClientsController::class, 'doAdd']);
+        $router->post('clients/do-delete', [AdminClientsController::class, 'doDelete']);
+        $router->post('clients/clients-detail', [AdminClientsController::class, 'Detail']);
     });
 });
