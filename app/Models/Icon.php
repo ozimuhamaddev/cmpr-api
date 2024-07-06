@@ -12,7 +12,7 @@ class Icon extends Model
 
     public static function getData()
     {
-        return Self::select('icon_id', 'icon_image', 'icon_image_ori')
+        return Self::select('icon_id','icon_name', 'icon_image', 'icon_image_ori')
             ->orderBy('icon.icon_id', 'DESC')
             ->get();
     }

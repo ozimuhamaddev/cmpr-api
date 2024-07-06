@@ -172,6 +172,7 @@ class HomeController extends Controller
         foreach ($data as $values) {
             $getDataArray[] = [
                 "id" => HelperService::encrypt($values->icon_id),
+                "icon_name" => $values->icon_name,
                 "icon_image" => $values->icon_image,
                 "icon_image_ori" => $values->icon_image_ori,
             ];
@@ -180,9 +181,6 @@ class HomeController extends Controller
         $msg = "success get data project category";
         return HelperService::success($msg, $getDataArray);
     }
-
-
-
 
     public function ClientsHome(Request $request)
     {
