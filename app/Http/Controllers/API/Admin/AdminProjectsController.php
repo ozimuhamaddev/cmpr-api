@@ -116,4 +116,71 @@ class AdminProjectsController extends Controller
         $msg = "success update news";
         return HelperService::success($msg, []);
     }
+
+    public function indexCategory(Request $request)
+    {
+        $perPage = $request->input('length', $request->input('per_page', 25)); // Default to 10 items per page if not provided
+        $page = $request->input('start') !== null
+            ? ($request->input('start') / $perPage) + 1
+            : $request->input('page', 1); // Default to page 1 if not provided
+
+        // Apply the filter before paginating
+        $query = Projects::ProjectsCategory();
+        $query->orderBy('projects_category.proj_category_id', 'DESC');
+        $getData = $query->paginate($perPage, ['*'], 'page', $page);
+        $data = $getData->map(function ($item) {
+            return [
+                'id' => HelperService::encrypt($item->proj_category_id),
+                'proj_category_name' => $item->proj_category_name
+            ];
+        });
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $getData->total(),
+            'recordsFiltered' => $getData->total(),
+            'data' => $data,
+            'current_page' => $getData->currentPage(), // Halaman saat ini
+            'last_page' => $getData->lastPage() // Halaman terakhir
+        ]);
+    }
+
+    public function doAddCategory(Request $request)
+    {
+        $param = [
+            "proj_category_name" => $request->proj_category_name,
+        ];
+
+        if ($request->id != "") {
+            $proj_category_id = HelperService::decrypt($request->id);
+            Projects::UpdateCategory($param, $proj_category_id);
+        } else {
+            Projects::AddCategory($param);
+        }
+
+        $msg = "success update news";
+        return HelperService::success($msg, []);
+    }
+
+    public function doDeleteCategory(Request $request)
+    {
+
+        $param = [
+            "active" => "N"
+        ];
+        $news_id = HelperService::decrypt($request->id);
+        Projects::UpdateCategory($param, $news_id);
+
+        $msg = "success update news";
+        return HelperService::success($msg, []);
+    }
+
+
+    public function masterCategoryDetail(Request $request)
+    {
+        $proj_category_id = HelperService::decrypt($request->id);
+        $msg = "success get data news";
+        $data = Projects::MasterCategoryDetail($proj_category_id);
+        return HelperService::success($msg, $data);
+    }
 }

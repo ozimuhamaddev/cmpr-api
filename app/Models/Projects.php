@@ -48,8 +48,7 @@ class Projects extends Model
     {
         return DB::table('projects_category')
             ->select('proj_category_id', 'proj_category_name')
-            ->where('active', 'Y')
-            ->get();
+            ->where('active', "Y");
     }
 
     public static function Detail($projects_id)
@@ -69,5 +68,26 @@ class Projects extends Model
     {
         return Self::where('projects_id', $projects_id)
             ->update($param);
+    }
+
+
+    public static function AddCategory($param)
+    {
+        return DB::table('projects_category')->insert($param);
+    }
+
+    public static function UpdateCategory($param, $proj_category_id)
+    {
+        return DB::table('projects_category')
+            ->where('proj_category_id', $proj_category_id)
+            ->update($param);
+    }
+
+    public static function MasterCategoryDetail($proj_category_id)
+    {
+        return DB::table('projects_category')
+            ->select('proj_category_name', 'proj_category_id')
+            ->where('proj_category_id', $proj_category_id)
+            ->first();
     }
 }

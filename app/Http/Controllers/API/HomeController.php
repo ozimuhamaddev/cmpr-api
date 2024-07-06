@@ -143,7 +143,9 @@ class HomeController extends Controller
 
     public function ProjectsCategory(Request $request)
     {
-        $data = Projects::ProjectsCategory();
+        $data = Projects::ProjectsCategory()
+            ->where('active', 'Y')
+            ->get();
         $getDataArray = [];
         foreach ($data as $values) {
             $getDataArray[] = [
@@ -244,5 +246,4 @@ class HomeController extends Controller
         }
         return HelperService::success($msg, $getDataArray);
     }
-
 }

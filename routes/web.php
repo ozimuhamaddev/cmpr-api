@@ -88,11 +88,19 @@ Route::middleware(['check.jwt'])->group(function () use ($router) {
         $router->post('news/index-admin', [AdminNewsController::class, 'index']);
         $router->post('news/do-add', [AdminNewsController::class, 'doAdd']);
         $router->post('news/do-delete', [AdminNewsController::class, 'doDelete']);
+        $router->post('news/index-category', [AdminNewsController::class, 'indexCategory']);
+        $router->post('news/do-add-category', [AdminNewsController::class, 'doAddCategory']);
+        $router->post('news/do-delete-category', [AdminNewsController::class, 'doDeleteCategory']);
+        $router->post('news/master-category-detail', [AdminNewsController::class, 'masterCategoryDetail']);
 
         $router->post('projects/index-admin', [AdminProjectsController::class, 'index']);
         $router->post('projects/do-add', [AdminProjectsController::class, 'doAdd']);
         $router->post('projects-detail', [AdminProjectsController::class, 'Detail']);
         $router->post('projects/do-delete', [AdminProjectsController::class, 'doDelete']);
+        $router->post('projects/index-category', [AdminProjectsController::class, 'indexCategory']);
+        $router->post('projects/do-add-category', [AdminProjectsController::class, 'doAddCategory']);
+        $router->post('projects/do-delete-category', [AdminProjectsController::class, 'doDeleteCategory']);
+        $router->post('projects/master-category-detail', [AdminProjectsController::class, 'masterCategoryDetail']);
 
         $router->post('services/index-admin', [AdminServicesController::class, 'index']);
         $router->post('services/do-add', [AdminServicesController::class, 'doAdd']);

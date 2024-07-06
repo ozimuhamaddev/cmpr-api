@@ -29,7 +29,7 @@ class News extends Model
     {
         return Self::select('news_id', 'title', 'description', 'image_ori', 'image', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y')
+            ->where('news.active', 'Y')
             ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
@@ -41,7 +41,7 @@ class News extends Model
     {
         return Self::select('title', 'description', 'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y')
+            ->where('news.active', 'Y')
             ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC');
@@ -59,7 +59,7 @@ class News extends Model
     {
         return Self::select('news_id', 'title', 'image_ori', 'image', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y')
+            ->where('news.active', 'Y')
             ->where('news_id', '<>', $news_id)
             ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
@@ -80,17 +80,14 @@ class News extends Model
     {
         return DB::table('category')
             ->select('category_name', 'category_id')
-            ->limit(6)
-            ->get();
+            ->where('active', "Y");
     }
-
-
 
     public static function CategoryDetail($id)
     {
         return Self::select('news_id', 'title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y')
+            ->where('news.active', 'Y')
             ->where('news.category_id', $id)
             ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
@@ -101,20 +98,18 @@ class News extends Model
     {
         return Self::select('news_id', 'title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y')
+            ->where('news.active', 'Y')
             ->where('news.tag', 'LIKE', '%' . $id . '%')
             ->orderBy('news.sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC');
     }
 
-
-
     public static function ListAll()
     {
         return Self::select('news_id', 'title', 'short_description', 'description',  'image_ori', 'image', 'icon_id', 'tag', 'category_name', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->join('category', 'news.category_id', 'category.category_id')
-            ->where('active', 'Y');
+            ->where('news.active', 'Y');
     }
 
     public static function AddNews($param)
@@ -126,5 +121,25 @@ class News extends Model
     {
         return Self::where('news_id', $news_id)
             ->update($param);
+    }
+
+    public static function AddCategory($param)
+    {
+        return DB::table('category')->insert($param);
+    }
+
+    public static function UpdateCategory($param, $category_id)
+    {
+        return DB::table('category')
+            ->where('category_id', $category_id)
+            ->update($param);
+    }
+
+    public static function MasterCategoryDetail($category_id)
+    {
+        return DB::table('category')
+            ->select('category_name', 'category_id')
+            ->where('category_id', $category_id)
+            ->first();
     }
 }

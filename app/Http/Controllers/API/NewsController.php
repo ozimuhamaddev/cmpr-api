@@ -95,7 +95,7 @@ class NewsController extends Controller
         $data['getOther'] = $getDataArray;
         $data['getTag'] = News::Tags();
 
-        $dataCategory = News::Category();
+        $dataCategory = News::Category()->get();
         $getDataArray = [];
         foreach ($dataCategory as $values) {
             $getDataArray[] = [
@@ -117,7 +117,7 @@ class NewsController extends Controller
 
     public function Category(Request $request)
     {
-        $data = News::Category();
+        $data = News::Category()->get();
         $getDataArray = [];
         foreach ($data as $values) {
             $getDataArray[] = [
