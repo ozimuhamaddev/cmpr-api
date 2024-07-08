@@ -48,7 +48,7 @@ class Projects extends Model
     {
         return DB::table('projects_category')
             ->select('proj_category_id', 'proj_category_name')
-            ->where('active', "Y");
+            ->where('projects_category.active', "Y");
     }
 
     public static function Detail($projects_id)

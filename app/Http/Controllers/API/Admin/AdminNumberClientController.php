@@ -28,9 +28,9 @@ class AdminNumberClientController extends Controller
                 'short_description' => $item->short_description,
                 'icon_id' => HelperService::encrypt($item->icon_id),
                 "icon_image" => $item->icon_image,
-                'created_at' => $item->created_at,
+                'created_at' => HelperService::formatDate($item->created_at),
                 'created_by' => $item->created_by,
-                'updated_at' => $item->updated_at,
+                'updated_at' => HelperService::formatDate($item->updated_at),
                 'updated_by' => $item->updated_by
             ];
         });
@@ -94,9 +94,9 @@ class AdminNumberClientController extends Controller
             "icon_id" => HelperService::encrypt($getData->icon_id),
             "icon_image" => $getData->icon_image,
             "icon_image_ori" => $getData->icon_image_ori,
-            "created_at" => $getData->created_at,
+            "created_at" => HelperService::formatDate($getData->created_at),
             "created_by" => $getData->created_by,
-            "updated_at" => $getData->updated_at,
+            "updated_at" => HelperService::formatDate($getData->updated_at),
             "updated_by" => $getData->updated_by,
         ];
         return HelperService::success($msg, $getDataArray);

@@ -57,9 +57,9 @@ class ServicesController extends Controller
             "icon_id" => HelperService::encrypt($getData->icon_id),
             "icon_image" => $getData->icon_image,
             "icon_image_ori" => $getData->icon_image_ori,
-            "created_at" => $getData->created_at,
+            "created_at" => HelperService::formatDate($getData->created_at),
             "created_by" => $getData->created_by,
-            "updated_at" => $getData->updated_at,
+            "updated_at" => HelperService::formatDate($getData->updated_at),
             "updated_by" => $getData->updated_by,
         ];
         return HelperService::success($msg, $getDataArra);

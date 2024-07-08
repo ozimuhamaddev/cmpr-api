@@ -20,7 +20,7 @@ class NumberClient extends Model
     {
         return Self::select('number_client_id', 'title', 'short_description', 'number_client.icon_id', 'icon_image_ori', 'icon_image', 'created_at', 'updated_at')
             ->LeftJoin('icon', 'number_client.icon_id', 'icon.icon_id')
-            ->where('active', 'Y');
+            ->where('number_client.active', 'Y');
     }
 
     public static function Detail($number_client_id)

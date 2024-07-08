@@ -21,7 +21,7 @@ class Banner extends Model
     public static function Home()
     {
         return Self::select('banner_id','title', 'sub_title', 'image_ori', 'image', 'created_at', 'updated_at')
-            ->where('active', 'Y');
+            ->where('banner.active', 'Y');
     }
 
     public static function Detail($banner_id)

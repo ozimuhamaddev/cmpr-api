@@ -7,6 +7,7 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\Users;
+use Carbon\Carbon;
 
 class HelperService
 {
@@ -79,5 +80,16 @@ class HelperService
             // General JWT exception
             return false;
         }
+    }
+
+    public static function formatDate($date)
+    {
+        $carbonDate = Carbon::parse($date);
+
+        if ($carbonDate->format('H:i:s') === '00:00:00') {
+            return $carbonDate->format('j F Y');
+        }
+
+        return $carbonDate->format('j F Y H:i:s');
     }
 }

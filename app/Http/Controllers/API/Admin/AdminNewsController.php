@@ -32,9 +32,9 @@ class AdminNewsController extends Controller
                 'icon_id' => $item->icon_id,
                 'tag' => $item->tag,
                 'category_name' => $item->category_name,
-                'created_at' => $item->created_at,
+                'created_at' => HelperService::formatDate($item->created_at),
                 'created_by' => $item->created_by,
-                'updated_at' => $item->updated_at,
+                'updated_at' => HelperService::formatDate($item->updated_at),
                 'updated_by' => $item->updated_by
             ];
         });

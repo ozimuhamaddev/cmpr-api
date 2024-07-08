@@ -20,7 +20,7 @@ class WeDo extends Model
     {
         return Self::select('wedo_id', 'title', 'short_description',  'icon_image_ori', 'icon_image', 'created_at', 'updated_at')
             ->LeftJoin('icon', 'wedo.icon_id', 'icon.icon_id')
-            ->where('active', 'Y');
+            ->where('wedo.active', 'Y');
     }
 
     public static function Detail($wedo_id)

@@ -144,7 +144,6 @@ class HomeController extends Controller
     public function ProjectsCategory(Request $request)
     {
         $data = Projects::ProjectsCategory()
-            ->where('active', 'Y')
             ->get();
         $getDataArray = [];
         foreach ($data as $values) {
@@ -167,7 +166,7 @@ class HomeController extends Controller
 
     public function Icon(Request $request)
     {
-        $data = Icon::getData();
+        $data = Icon::getData()->get();
         $getDataArray = [];
         foreach ($data as $values) {
             $getDataArray[] = [

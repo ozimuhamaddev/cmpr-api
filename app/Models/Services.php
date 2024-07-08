@@ -25,7 +25,7 @@ class Services extends Model
     {
         return Self::select('title', 'short_description', 'description', 'image_ori', 'image', 'icon_image', 'icon_image_ori', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->LeftJoin('icon', 'services.icon_id', 'icon.icon_id')
-            ->where('active', 'Y')
+            ->where('services.active', 'Y')
             ->orderBy('sort', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'ASC')
@@ -56,7 +56,7 @@ class Services extends Model
     public static function Other($services_id)
     {
         return Self::select('title')
-            ->where('active', 'Y')
+            ->where('services.active', 'Y')
             ->where('services_id', '<>', $services_id)
             ->orderBy('sort', 'DESC')
             ->orderBy('created_at', 'DESC')
@@ -68,7 +68,7 @@ class Services extends Model
     {
         return Self::select('services_id', 'title', 'short_description', 'description', 'image_ori', 'image', 'services.icon_id', 'icon_image', 'icon_image_ori', 'created_at', 'created_by', 'updated_at', 'updated_by')
             ->LeftJoin('icon', 'services.icon_id', 'icon.icon_id')
-            ->where('active', 'Y');
+            ->where('services.active', 'Y');
     }
 
     public static function AddServices($param)

@@ -125,5 +125,13 @@ Route::middleware(['check.jwt'])->group(function () use ($router) {
         $router->post('clients/do-add', [AdminClientsController::class, 'doAdd']);
         $router->post('clients/do-delete', [AdminClientsController::class, 'doDelete']);
         $router->post('clients/clients-detail', [AdminClientsController::class, 'Detail']);
+
+
+
+
+        $router->post('icon/master-icon-detail', [AdminHomeController::class, 'masterIconDetail']);
+        $router->post('icon/index-admin', [AdminHomeController::class, 'indexIcon']);
+        $router->post('icon/do-add', [AdminHomeController::class, 'doAddIcon']);
+        $router->post('icon/do-delete', [AdminHomeController::class, 'doDeleteIcon']);
     });
 });

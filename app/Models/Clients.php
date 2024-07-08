@@ -20,7 +20,7 @@ class Clients extends Model
     public static function Home()
     {
         return Self::select('clients_id','title', 'image_ori', 'image', 'created_at', 'updated_at')
-            ->where('active', 'Y');
+            ->where('clients.active', 'Y');
     }
 
     public static function Detail($clients_id)

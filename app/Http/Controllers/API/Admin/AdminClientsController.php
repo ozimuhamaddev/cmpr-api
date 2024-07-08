@@ -27,9 +27,9 @@ class AdminClientsController extends Controller
                 'title' => $item->title,
                 'image_ori' => $item->image_ori,
                 'image' => $item->image,
-                'created_at' => $item->created_at,
+                'created_at' => HelperService::formatDate($item->created_at),
                 'created_by' => $item->created_by,
-                'updated_at' => $item->updated_at,
+                'updated_at' => HelperService::formatDate($item->updated_at),
                 'updated_by' => $item->updated_by
             ];
         });
@@ -94,9 +94,9 @@ class AdminClientsController extends Controller
             "title" => $getData->title,
             "image_ori" => $getData->image_ori,
             "image" => $getData->image,
-            "created_at" => $getData->created_at,
+            "created_at" => HelperService::formatDate($getData->created_at),
             "created_by" => $getData->created_by,
-            "updated_at" => $getData->updated_at,
+            "updated_at" => HelperService::formatDate($getData->updated_at),
             "updated_by" => $getData->updated_by,
         ];
         return HelperService::success($msg, $getDataArray);
