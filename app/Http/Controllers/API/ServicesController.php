@@ -32,9 +32,9 @@ class ServicesController extends Controller
                 "icon_id" => HelperService::encrypt($values['icon_id']),
                 "icon_image" => $values['icon_image'],
                 "icon_image_ori" => $values['icon_image_ori'],
-                "created_at" => $values['created_at'],
+                "created_at" => HelperService::formatDate($values['created_at']),
                 "created_by" => $values['created_by'],
-                "updated_at" => $values['updated_at'],
+                "updated_at" => HelperService::formatDate($values['updated_at']),
                 "updated_by" => $values['updated_by']
             ];
         }
@@ -65,3 +65,34 @@ class ServicesController extends Controller
         return HelperService::success($msg, $getDataArra);
     }
 }
+
+
+
+
+
+
+
+
+
+
+'20240627-164-01-08',	
+'20240627-180-01-04',	
+'20240627-183-01-01',	
+'20240627-345-01-02',	
+'20240627-350-01-21',	
+'20240627-368-01-16',	
+'20240627-378-01-15',	
+'20240627-381-01-12',	
+'20240627-403-01-10',	
+'20240627-404-01-09',	
+'20240627-432-01-14',	
+'20240627-443-01-03',	
+'20240627-505-01-06',	
+'20240627-533-01-18',	
+'20240627-628-01-11',	
+'20240627-633-01-05',	
+'20240627-766-01-13',	
+'20240627-805-01-17',	
+'20240627-865-01-19',	
+'20240627-888-01-07',	
+'20240627-945-01-20',	

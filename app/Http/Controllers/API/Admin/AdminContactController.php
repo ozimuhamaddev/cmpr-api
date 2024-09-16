@@ -21,6 +21,7 @@ class AdminContactController extends Controller
             'phone' => $request->phone,
             'lat' => $request->lat,
             'long' => $request->long,
+            'google_map_api_key' => $request->google_map_api_key,
             "updated_at" => date("Y-m-d H:i:s"),
         ];
 

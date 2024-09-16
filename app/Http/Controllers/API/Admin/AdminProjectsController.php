@@ -94,9 +94,9 @@ class AdminProjectsController extends Controller
             'icon_id' => $detail->icon_id,
             'proj_category_name' => $detail->proj_category_name,
             'proj_category_id' =>  HelperService::encrypt($detail->proj_category_id),
-            'created_at' => $detail->created_at,
+            'created_at' => HelperService::formatDate($detail->created_at),
             'created_by' => $detail->created_by,
-            'updated_at' => $detail->updated_at,
+            'updated_at' => HelperService::formatDate($detail->updated_at),
             'updated_by' => $detail->updated_by
         ];
         return HelperService::success($msg, $data);

@@ -37,9 +37,9 @@ class ProjectsController extends Controller
                 "icon_image" => $values['icon_image'],
                 "icon_image_ori" => $values['icon_image_ori'],
                 "proj_category_name" => $values['proj_category_name'],
-                "created_at" => $values['created_at'],
+                "created_at" => HelperService::formatDate($values['created_at']),
                 "created_by" => $values['created_by'],
-                "updated_at" => $values['updated_at'],
+                "updated_at" => HelperService::formatDate($values['updated_at']),
                 "updated_by" => $values['updated_by']
             ];
         }

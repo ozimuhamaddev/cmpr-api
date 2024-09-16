@@ -12,7 +12,7 @@ class Contact extends Model
 
     public static function Detail()
     {
-        return Self::select('title', 'sub_title', 'address', 'email', 'phone', 'lat', 'long')
+        return Self::select('title', 'sub_title', 'address', 'email', 'phone', 'lat', 'long', 'google_map_api_key')
             ->first();
     }
 

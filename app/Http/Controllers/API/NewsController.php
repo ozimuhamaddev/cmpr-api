@@ -70,9 +70,9 @@ class NewsController extends Controller
             'tag' => $detail->tag,
             'category_name' => $detail->category_name,
             'category_id' =>  HelperService::encrypt($detail->category_id),
-            'created_at' => $detail->created_at,
+            'created_at' => HelperService::formatDate($detail->created_at),
             'created_by' => $detail->created_by,
-            'updated_at' => $detail->updated_at,
+            'updated_at' => HelperService::formatDate($detail->updated_at),
             'updated_by' => $detail->updated_by
         ];
 
@@ -85,9 +85,9 @@ class NewsController extends Controller
                 "title" => $values['title'],
                 "image_ori" => $values['image_ori'],
                 "image" => $values['image'],
-                "created_at" => $values['created_at'],
+                "created_at" => HelperService::formatDate($values['created_at']),
                 "created_by" => $values['created_by'],
-                "updated_at" => $values['updated_at'],
+                "updated_at" => HelperService::formatDate($values['updated_at']),
                 "updated_by" => $values['updated_by']
             ];
         }
